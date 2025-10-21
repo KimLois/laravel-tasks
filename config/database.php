@@ -123,29 +123,31 @@ return [
 
     'redis' => [
 
-        'client' => env('REDIS_CLIENT', 'phpredis'),
+    'client' => env('REDIS_CLIENT', 'phpredis'),
 
-        'options' => [
-            'cluster' => env('REDIS_CLUSTER', 'redis'),
-            'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_').'_database_'),
-        ],
+    'options' => [
+        'cluster' => env('REDIS_CLUSTER', 'redis'),
+        'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_').'_database_'),
+    ],
 
-        'default' => [
-            'url' => env('REDIS_URL'),
-            'host' => env('REDIS_HOST', '127.0.0.1'),
-            'username' => env('REDIS_USERNAME'),
-            'password' => env('REDIS_PASSWORD'),
-            'port' => env('REDIS_PORT', '6379'),
-            'database' => env('REDIS_DB', '0'),
-        ],
+    // THIS IS THE PART TO CHANGE
+    'default' => [
+        'url' => env('REDIS_URL'),
+        'host' => env('AZURE_REDIS_HOST', '127.0.0.1'), // Use Azure's variable
+        'password' => env('AZURE_REDIS_PASSWORD'),      // Use Azure's variable
+        'port' => env('AZURE_REDIS_PORT', '6379'),      // Use Azure's variable
+        'database' => env('REDIS_DB', '0'),
+        'scheme' => 'tls',                              // ADD THIS LINE
+    ],
 
-        'cache' => [
-            'url' => env('REDIS_URL'),
-            'host' => env('REDIS_HOST', '127.0.0.1'),
-            'username' => env('REDIS_USERNAME'),
-            'password' => env('REDIS_PASSWORD'),
-            'port' => env('REDIS_PORT', '6379'),
-            'database' => env('REDIS_CACHE_DB', '1'),
+    // ALSO CHANGE THIS PART
+    'cache' => [
+        'url' => env('REDIS_URL'),
+        'host' => env('AZURE_REDIS_HOST', '127.0.0.1'), // Use Azure's variable
+        'password' => env('AZURE_REDIS_PASSWORD'),      // Use Azure's variable
+        'port' => env('AZURE_REDIS_PORT', '6379'),      // Use Azure's variable
+        'database' => env('REDIS_CACHE_DB', '1'),
+        'scheme' => 'tls',                              // ADD THIS LINE
         ],
 
     ],
